@@ -2,7 +2,6 @@ import numpy
 import numpy as np
 import prefix_constants
 from numpy.linalg import inv
-from matplotlib import pyplot as plt
 
 # n is time steps
 
@@ -22,7 +21,7 @@ v_q_m[3][0] = 1
 
 
 def w_dot(w):
-    return inv(prefix_constants.m_MOI).dot(w * 0.3 - np.cross(w, prefix_constants.m_MOI.dot(w)))
+    return inv(prefix_constants.m_MOI).dot(prefix_constants.v_M - np.cross(w, prefix_constants.m_MOI.dot(w)))
 
 
 def q_dot(q, w):
@@ -72,18 +71,3 @@ for i in range(0, 1000):
     v_q_m[1][i + 1] = q_next_st[1]
     v_q_m[2][i + 1] = q_next_st[2]
     v_q_m[3][i + 1] = q_next_st[3]
-
-x = np.empty(1001, dtype=float)
-
-for i in range(0, 1001):
-    x[i] = 0.01 * i
-
-'''plt.plot(x, v_w_m[0])
-plt.plot(x, v_w_m[1])
-plt.plot(x, v_w_m[2])'''
-
-plt.plot(x, v_q_m[0])
-plt.plot(x, v_q_m[1])
-plt.plot(x, v_q_m[2])
-plt.plot(x, v_q_m[3])
-plt.show()
